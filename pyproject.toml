@@ -1,0 +1,66 @@
+[tool.poetry]
+name = "sfn-search"
+version = "0.1.0"
+description = "Search"
+authors = ["Search StepFunction executions based on deployment id"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+botocore = "^1.20.106"
+boto3 = "^1.17.106"
+
+[tool.poetry.dev-dependencies]
+isort = "^5.9.3"
+black = "^21.9b0"
+pytest = "^=6.2.0"
+flake8 = "^3.9.2"
+pytest-env = "^0.6.2"
+pdbpp = "^0.10.3"
+pytest-assume = "^2.4.3"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.isort]
+src_paths = ["src", "tests"]
+multi_line_output=3
+include_trailing_comma="True"
+force_grid_wrap=0
+use_parentheses="True"
+line_length=120
+skip=".vscode, .tox, .git"
+default_section="THIRDPARTY"
+sections="FUTURE,STDLIB,THIRDPARTY,FIRSTPARTY,LOCALFOLDER"
+
+[tool.pytest.ini_options]
+addopts = "--strict-markers -v"
+markers = ["spark",
+           "unit_test",
+]
+testpaths = ["tests"]
+env = [
+    "LOG_THRESHOLD = INFO"
+]
+filterwarnings = [
+    "ignore:Using or importing the ABCs",
+    "ignore:the imp module is deprecated in favour of importlib",
+]
+
+[tool.black]
+line-length = 120
+exclude = '''
+/(
+  # Directories
+    \.eggs
+  | \.git
+  | \.vscode
+  | \.tox
+  | \.venv
+  | \.ropeproject
+  | build
+  | venv
+  | .*egg-info
+)/
+'''
+
