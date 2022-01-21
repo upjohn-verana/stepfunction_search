@@ -7,5 +7,5 @@ pre-commit:
 tests:
     PYTHONPATH=src poetry run pytest ./tests
 
-run:
-    poetry run python src/sfn_search.py
+run deployment_id:
+    poetry run python src/sfn_search.py {{deployment_id}}

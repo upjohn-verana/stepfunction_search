@@ -1,8 +1,14 @@
 """
-todo
-just successful executions
+usage:
+    `python sfn_search.py <deployment_id>`
+
+    this assumes that you have boto3 installed in your virtualenv
+
+Note:
+This works on just successful sfn executions. You can change it to include other states
 """
 import re
+import sys
 from typing import Dict, List, Tuple
 
 import boto3
@@ -64,7 +70,7 @@ def output_result(matching_results: List[Tuple]) -> str:
 
 
 def main(deployment_id):
-    last_executions = get_executions(500)
+    last_executions = get_executions(10)
     executions_arn = parse_executions(last_executions)
     definitions_raw = [get_definition(i[2]) for i in executions_arn]
     definitions_parsed = [parse_desription(i) for i in definitions_raw]
@@ -76,7 +82,14 @@ def main(deployment_id):
 
 
 if __name__ == "__main__":
-    deployment_id = "c58uq30dpdsci4h10n8g"
+    if len(sys.argv) > 1:
+        deployment_id = sys.argv[1]
+    else:
+        print("Need deployment id to be passed as an argument")
+        raise Exception("No deployment passed")
+
     print(f"\nResults for deployment id {deployment_id}\n")
 
-    print(main(deployment_id))
+    results = main(deployment_id)
+    printable_results = results if results != "" else "No results"
+    print(printable_results)
