@@ -1,6 +1,6 @@
 import datetime
 
-from sfn_search import parse_executions, parse_desription, retrieve_matching_id
+from sfn_search import parse_desription, parse_executions, retrieve_matching_id
 
 execution_list = {
     "executions": [
